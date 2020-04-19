@@ -40,8 +40,8 @@ word2vec的算法是公开的，word2vec模型的质量完全取决于训练语�
 
 	tar -zxvf news_sohusite_xml.full.tar.gz
 	cat news_sohusite_xml.dat | iconv -f gb18030 -t utf-8 | grep "<content>" > news_sohusite.txt
-	sed -i "" 's/<content>//g' news_sohusite.txt
-	sed -i "" 's/<\/content>//g' news_sohusite.txt
+	sed -i 's/<content>//g' news_sohusite.txt
+	sed -i 's/<\/content>//g' news_sohusite.txt
 
 其中iconv命令的格式为：
 
@@ -63,6 +63,19 @@ word2vec的算法是公开的，word2vec模型的质量完全取决于训练语�
 
 	python -m jieba -d ' ' news_sohusite.txt > news_sohusite_cutword.txt
 
+如果有字符编码问题，使用脚本处理。
+```python
+import jieba
+
+with open('news_sohusite.txt', 'r', encoding='utf8') as fi:
+    lines = fi.readlines()
+
+size = len(lines)
+with open('news_sohusite_cutword.txt', 'w', encoding='utf8') as fo:
+    for index in range(size):
+        fo.writelines([' '.join(jieba.cut(lines[index].strip())) + '\n'])
+        print('切词完成：%.2f%% [%d/%d]' %((index + 1) * 100 / size, index + 1, size))
+```
 # 训练word2vec
 完成预处理后，即可以利用gensim库进行训练。
 

@@ -22,20 +22,21 @@ counts = [[3, 0, 1],
 tfidf = transformer.fit_transform(counts)
 print(tfidf.toarray())
 
+# tf.contrib 在tensorflow2.0中已废弃
+#
+# import tensorflow as tf
+# tf.contrib.learn.preprocessing.VocabularyProcessor (
+#                                           max_document_length,    
+#                                           min_frequency=0,
+#                                           vocabulary=None,
+#                                           tokenizer_fn=None)
+# x_text =[
+#     'i love you',
+#     'me too'
+# ]
 
-import tensorflow as tf
-tf.contrib.learn.preprocessing.VocabularyProcessor (
-                                          max_document_length,    
-                                          min_frequency=0,
-                                          vocabulary=None,
-                                          tokenizer_fn=None)
-x_text =[
-    'i love you',
-    'me too'
-]
-
-vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
-vocab_processor.fit(x_text)
-print next(vocab_processor.transform(['i me too'])).tolist()
-x = np.array(list(vocab_processor.fit_transform(x_text)))
-print(x)
+# vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
+# vocab_processor.fit(x_text)
+# print(next(vocab_processor.transform(['i me too'])).tolist())
+# x = np.array(list(vocab_processor.fit_transform(x_text)))
+# print(x)
