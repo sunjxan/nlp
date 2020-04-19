@@ -14,7 +14,9 @@ with open('news_sohusite_xml.dat', 'r', encoding='gb18030') as fi:
 
 lines = list(map(lambda x: x[9:-11], filter(lambda x: x[:9] == '<content>', lines)))
 
-total = min(len(lines), MAX_CUT)
+total = len(lines)
+if 'MAX_CUT' in vars() and total > vars()['MAX_CUT']:
+	total = vars()['MAX_CUT']
 done = 0
 
 while done != total:
